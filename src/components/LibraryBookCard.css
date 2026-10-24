@@ -1,0 +1,98 @@
+/* Own grid rather than reusing .book-grid from BookListSection.css — that
+   would be an implicit cross-component CSS dependency that only happens to
+   work because every stylesheet lands in one bundle. */
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem 0.9rem;
+}
+
+.library-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.library-card-link {
+  display: block;
+}
+
+.library-card-cover {
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease;
+}
+
+.library-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.library-card-cover-fallback {
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.library-card-link:hover .library-card-cover,
+.library-card-link:focus-visible .library-card-cover {
+  border-color: var(--color-accent);
+}
+
+.library-card-title {
+  margin: 0.5rem 0 0.15rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.library-card-authors {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.library-card-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.library-card-remove {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.library-card-remove:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.library-card-remove:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.library-card-error {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-accent-hover);
+}

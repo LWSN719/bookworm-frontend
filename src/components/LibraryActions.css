@@ -1,0 +1,25 @@
+.library-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.library-actions-label {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.library-actions-note {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.library-actions-error {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-accent-hover);
+}

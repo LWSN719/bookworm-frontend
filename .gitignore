@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vercel/
+
+# Local env files hold real values and must never be committed.
+.env
+.env.*
+# The template is required by the project and must stay tracked.
+!.env.example
+
+*.log
+.DS_Store

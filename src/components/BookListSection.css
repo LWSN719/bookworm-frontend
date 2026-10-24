@@ -1,0 +1,33 @@
+.book-list-section {
+  margin-bottom: 2.5rem;
+}
+
+.book-list-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.book-carousel {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.1rem 0.9rem;
+}
+
+.load-more-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.load-more-error-text {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}

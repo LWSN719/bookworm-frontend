@@ -1,0 +1,37 @@
+.log-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.log-form-body {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding: 0.6rem 0.75rem;
+  resize: vertical;
+}
+
+.log-form-body:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.log-form-count-over {
+  color: var(--color-accent);
+}
+
+.log-form-rating {
+  align-items: flex-start;
+}
+
+.log-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}

@@ -1,0 +1,10 @@
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.log-list-loading {
+  padding: 1.5rem 0;
+  color: var(--color-text-muted);
+}

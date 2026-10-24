@@ -1,0 +1,48 @@
+.config-error {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  min-height: 100vh;
+}
+
+.config-error-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  max-width: 640px;
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+.config-error-title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.config-error-subtitle {
+  font-size: 1rem;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.config-error-list {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.config-error-card code {
+  background: var(--color-surface-raised);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.9em;
+}
+
+.config-error-warning {
+  border-top: 1px solid var(--color-border);
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
