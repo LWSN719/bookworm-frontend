@@ -8,7 +8,7 @@
 
 .config-error-card {
   position: relative;
-  background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
+  background: linear-gradient(180deg, var(--color-surface-card), var(--color-surface));
   border: 1px solid var(--color-border);
   border-top: 3px solid var(--color-accent);
   border-radius: var(--radius-lg);
@@ -47,7 +47,7 @@
   border-radius: 4px;
   padding: 0.1rem 0.4rem;
   font-size: 0.88em;
-  color: #ff8a92;
+  color: var(--color-accent-soft);
 }
 
 .config-error-warning {

@@ -7,7 +7,7 @@
   align-items: center;
   gap: 0.7rem;
   font-size: clamp(1.15rem, 1rem + 0.5vw, 1.45rem);
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
 }
 
 .book-logs-title::before {
@@ -20,7 +20,7 @@
 }
 
 .book-logs-compose {
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
 }
 
 .book-logs-note {

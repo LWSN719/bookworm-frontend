@@ -8,7 +8,7 @@
   position: relative;
   max-width: 580px;
   text-align: center;
-  background: linear-gradient(180deg, rgba(28, 28, 34, 0.92), rgba(20, 20, 24, 0.92));
+  background: linear-gradient(180deg, var(--color-surface-card), rgba(12, 28, 63, 0.97));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: clamp(2rem, 5vw, 3rem);
@@ -22,7 +22,7 @@
   position: absolute;
   inset: -40% 20% auto 20%;
   height: 60%;
-  background: radial-gradient(ellipse at center, rgba(229, 9, 20, 0.22), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(255, 140, 66, 0.22), transparent 70%);
   pointer-events: none;
 }
 

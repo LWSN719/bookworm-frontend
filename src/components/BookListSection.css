@@ -1,15 +1,15 @@
 .book-list-section {
-  margin-bottom: 3rem;
+  margin-bottom: 3.75rem;
 }
 
 .book-list-title {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  margin: 0 0 1.1rem;
-  font-size: clamp(1.1rem, 0.95rem + 0.5vw, 1.35rem);
-  font-weight: 750;
-  letter-spacing: -0.015em;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.15rem, 0.98rem + 0.55vw, 1.45rem);
+  font-weight: 760;
+  letter-spacing: -0.018em;
 }
 
 .book-list-title::before {
@@ -32,7 +32,7 @@
    fixed small size with dead space beside them.
    Each card = (row width - the gaps between them) / cards per view. */
 .book-carousel {
-  --row-gap: 1.25rem;
+  --row-gap: 1.35rem;
   --per-view: 6;
   display: flex;
   gap: var(--row-gap);
@@ -41,7 +41,7 @@
   scrollbar-width: none;
   /* Room for the hover lift and glow, which the scroll container would
      otherwise clip. */
-  padding: 0.5rem 0 1.5rem;
+  padding: 0.75rem 0 1.75rem;
 }
 
 .book-carousel::-webkit-scrollbar {
@@ -101,7 +101,7 @@
   height: 78px;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
-  background: rgba(10, 10, 12, 0.78);
+  background: rgba(8, 20, 43, 0.78);
   backdrop-filter: blur(8px);
   color: var(--color-text);
   opacity: 0;
@@ -120,8 +120,9 @@
 }
 
 .carousel-arrow:hover:not(:disabled) {
-  background: rgba(229, 9, 20, 0.85);
+  background: var(--color-accent);
   border-color: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 /* Hidden rather than dimmed at the ends: a dead control is worse than no
@@ -152,8 +153,8 @@
    read as the same component at the same scale. */
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(146px, 13vw, 200px), 1fr));
-  gap: 2rem 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(150px, 13vw, 204px), 1fr));
+  gap: 2.25rem 1.35rem;
 }
 
 /* In a grid the card fills its track instead of keeping a fixed width. */

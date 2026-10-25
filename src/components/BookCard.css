@@ -17,9 +17,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--speed) var(--ease), border-color var(--speed) var(--ease),
-    box-shadow var(--speed) var(--ease);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  /* Grows upward off the row's baseline rather than from its centre, so a
+     hovered cover lifts out of the shelf instead of swelling in place. */
+  transform-origin: center bottom;
+  transition: transform 260ms var(--ease), border-color 260ms var(--ease),
+    box-shadow 260ms var(--ease);
 }
 
 .book-card-cover img {
@@ -35,7 +38,7 @@
   font-size: 0.78rem;
   font-weight: 600;
   line-height: 1.35;
-  color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 .book-card-overlay {
@@ -45,21 +48,21 @@
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 0.9rem;
-  background: var(--scrim-bottom);
+  background: linear-gradient(to top, rgba(4, 10, 24, 0.92) 6%, rgba(4, 10, 24, 0.35) 48%, transparent 100%);
   opacity: 0;
-  transition: opacity var(--speed) var(--ease);
+  transition: opacity 260ms var(--ease);
 }
 
 .book-card-overlay-cta {
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid transparent;
   border-radius: 999px;
   padding: 0.25rem 0.9rem;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
-  background: rgba(10, 10, 12, 0.5);
+  color: var(--color-text);
+  background: rgba(8, 20, 43, 0.5);
   backdrop-filter: blur(3px);
   transform: translateY(6px);
   transition: transform var(--speed) var(--ease);
@@ -67,9 +70,10 @@
 
 .book-card:hover .book-card-cover,
 .book-card:focus-visible .book-card-cover {
-  transform: translateY(-6px) scale(1.03);
+  transform: translateY(-8px) scale(1.035);
   border-color: var(--color-accent);
-  box-shadow: var(--shadow-md), var(--glow-accent);
+  box-shadow: 0 22px 44px rgba(2, 7, 18, 0.6), 0 0 0 1px rgba(255, 140, 66, 0.35),
+    0 10px 30px rgba(255, 140, 66, 0.2);
 }
 
 .book-card:hover .book-card-overlay,
@@ -83,7 +87,7 @@
 }
 
 .book-card-title {
-  margin: 0.7rem 0 0.2rem;
+  margin: 0.8rem 0 0.25rem;
   font-size: 0.88rem;
   font-weight: 620;
   line-height: 1.35;
@@ -92,6 +96,9 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  /* Two lines are always reserved, so the author line sits at the same
+     height on every card in a row whether the title wraps or not. */
+  min-height: calc(2 * 1.35em);
   transition: color var(--speed) var(--ease);
 }
 

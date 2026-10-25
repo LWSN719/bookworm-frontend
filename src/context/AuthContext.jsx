@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
       try {
         const { data, error } = await supabase
           .from('profiles')
-          .select('id, display_name')
+          .select('id, display_name, created_at')
           .eq('id', userId)
           .maybeSingle()
 
@@ -84,6 +84,15 @@ export function AuthProvider({ children }) {
       active = false
     }
   }, [userId])
+
+  // Applies a profile row the caller already has — the one returned by a
+  // successful display-name update. Everything that shows a name reads it
+  // from here, so the navbar, greeting and avatar change immediately; logs
+  // follow on their next fetch, since they read the name through the
+  // profiles join rather than storing a copy.
+  const applyProfile = useCallback((row) => {
+    if (row?.id) setProfile(row)
+  }, [])
 
   const signIn = useCallback(async ({ email, password }) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -114,6 +123,30 @@ export function AuthProvider({ children }) {
     return { ok: true, needsEmailConfirmation: !data.session }
   }, [])
 
+  // Re-verifies the current password before changing it. Supabase does not
+  // require this — updateUser would accept a new password on the strength of
+  // the existing session alone — but without it anyone at an unlocked
+  // machine could take the account over. The re-check is a normal sign-in
+  // for the same user, so a wrong guess fails without disturbing the session
+  // they already have.
+  const changePassword = useCallback(
+    async ({ currentPassword, newPassword }) => {
+      const email = session?.user?.email
+      if (!email) return { ok: false, message: 'Please log in again to change your password.' }
+
+      const { error: reauthError } = await supabase.auth.signInWithPassword({
+        email,
+        password: currentPassword,
+      })
+      if (reauthError) return { ok: false, message: 'That current password is incorrect.' }
+
+      const { error } = await supabase.auth.updateUser({ password: newPassword })
+      if (error) return { ok: false, message: friendlyAuthError(error) }
+      return { ok: true }
+    },
+    [session],
+  )
+
   const signOut = useCallback(async () => {
     const { error } = await supabase.auth.signOut()
     if (error) return { ok: false, message: friendlyAuthError(error) }
@@ -131,8 +164,10 @@ export function AuthProvider({ children }) {
       signIn,
       signUp,
       signOut,
+      applyProfile,
+      changePassword,
     }),
-    [session, profile, initializing, signIn, signUp, signOut],
+    [session, profile, initializing, signIn, signUp, signOut, applyProfile, changePassword],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

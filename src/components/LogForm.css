@@ -1,5 +1,5 @@
 .log-form {
-  background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
+  background: linear-gradient(180deg, var(--color-surface-card), var(--color-surface));
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
   padding: 1.4rem;

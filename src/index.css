@@ -12,29 +12,40 @@
    ============================================================ */
 
 :root {
-  /* ---- surfaces: near-black through charcoal ---- */
-  --color-bg: #0a0a0c;
-  --color-bg-elevated: #101013;
-  --color-surface: #141418;
-  --color-surface-raised: #1c1c22;
-  --color-surface-hover: #24242c;
-  --color-border: #26262e;
-  --color-border-strong: #35353f;
+  /* ---- surfaces: navy, darkest to lightest ----
+     #08142B and #112B5B are the chosen palette; the three between and
+     around them are interpolated, because a dark UI needs more steps than
+     two to separate a page from a card from a hovered card. */
+  --color-bg: #08142B;
+  --color-bg-elevated: #0b1a38;
+  --color-surface: #0e2047;
+  --color-surface-raised: #112b5b;
+  /* The top stop of every card gradient. Capped by contrast: muted text on
+     this colour measures 4.69:1, and anything lighter drops it below AA. */
+  --color-surface-card: #0f2449;
+  --color-surface-hover: #17376e;
+  --color-border: #1c3a6b;
+  --color-border-strong: #2a5090;
 
   /* ---- text ---- */
-  --color-text: #f5f5f7;
-  --color-text-muted: #9b9ba6;
-  --color-text-faint: #6d6d78;
+  --color-text: #e9eaff;
+  --color-text-muted: #7b8fb3;
+  --color-text-faint: #7f93b8;
 
   /* ---- accent ---- */
-  --color-accent: #e50914;
-  --color-accent-hover: #ff1f2d;
-  --color-accent-dim: rgba(229, 9, 20, 0.14);
-  --color-accent-line: rgba(229, 9, 20, 0.45);
+  --color-accent: #ff8c42;
+  --color-accent-hover: #ffa767;
+  /* What goes ON the accent. White on this orange measures about 2.1:1 -
+     unreadable - so filled accent surfaces take dark navy text instead,
+     which measures about 8:1. */
+  --color-on-accent: #08142b;
+  --color-accent-soft: #ffb98c;
+  --color-accent-dim: rgba(255, 140, 66, 0.15);
+  --color-accent-line: rgba(255, 140, 66, 0.45);
 
-  /* ---- ratings read warmer than the action red, so a 5-star
-          score never looks like a destructive control ---- */
-  --color-star: #f5b50a;
+  /* ---- ratings read as gold, kept clear of the orange accent so a 5-star
+          score is never mistaken for an action ---- */
+  --color-star: #ffd166;
 
   /* ---- geometry ---- */
   --radius: 10px;
@@ -43,19 +54,20 @@
   --nav-height: 68px;
   --page-gutter: clamp(1rem, 4vw, 3.5rem);
 
-  /* ---- elevation ---- */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.65);
-  --glow-accent: 0 10px 30px rgba(229, 9, 20, 0.35);
+  /* ---- elevation: navy-tinted rather than neutral black, so shadows sit
+          in the same colour family as the surfaces they fall on ---- */
+  --shadow-sm: 0 1px 2px rgba(2, 7, 18, 0.5);
+  --shadow-md: 0 8px 24px rgba(2, 7, 18, 0.55);
+  --shadow-lg: 0 24px 60px rgba(2, 7, 18, 0.7);
+  --glow-accent: 0 10px 30px rgba(255, 140, 66, 0.32);
 
-  /* ---- scrims: the cinematic part. A poster becomes a backdrop
-          by having one of these laid over it ---- */
-  --scrim-bottom: linear-gradient(to top, rgba(10, 10, 12, 0.98) 8%, rgba(10, 10, 12, 0.55) 45%, rgba(10, 10, 12, 0.1) 100%);
-  --scrim-left: linear-gradient(to right, rgba(10, 10, 12, 0.97) 0%, rgba(10, 10, 12, 0.8) 38%, rgba(10, 10, 12, 0.2) 75%, rgba(10, 10, 12, 0) 100%);
+  /* ---- scrims: the cinematic part. A poster becomes a backdrop by having
+          one of these laid over it ---- */
+  --scrim-bottom: linear-gradient(to top, rgba(8, 20, 43, 0.98) 8%, rgba(8, 20, 43, 0.58) 45%, rgba(8, 20, 43, 0.1) 100%);
+  --scrim-left: linear-gradient(to right, rgba(8, 20, 43, 0.97) 0%, rgba(8, 20, 43, 0.82) 38%, rgba(8, 20, 43, 0.22) 75%, rgba(8, 20, 43, 0) 100%);
 
-  /* ---- motion. One easing everywhere so the whole app moves
-          with the same hand ---- */
+  /* ---- motion. One easing everywhere so the whole app moves with the same
+          hand ---- */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --speed: 220ms;
 
@@ -77,23 +89,42 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* The page darkens as it descends: navy at the top, close to black at the
+     foot. Fixed, so scrolling moves content through the light rather than
+     dragging the light along with it. */
+  background-color: var(--color-bg);
+  background-image: linear-gradient(180deg, rgba(23, 55, 110, 0.38) 0%, rgba(8, 20, 43, 0) 42%, rgba(4, 10, 24, 0.9) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-/* A faint red wash at the top of the page, so the background reads
-   as lit rather than flat black. */
+/* Two light sources, both well under the content: a warm orange one high on
+   the left, and a cool navy lift on the right. Together they keep the
+   background from reading as one flat fill. */
 body::before {
   content: '';
   position: fixed;
-  inset: 0 0 auto 0;
-  height: 70vh;
-  background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(229, 9, 20, 0.07), transparent 70%);
+  inset: 0;
+  background:
+    radial-gradient(900px 520px at 10% -6%, rgba(255, 140, 66, 0.11), transparent 62%),
+    radial-gradient(1100px 620px at 96% 6%, rgba(42, 80, 144, 0.34), transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* A soft vignette, behind the content rather than over it, so the corners
+   recede without dulling anything that has to be read. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(135% 105% at 50% 38%, transparent 52%, rgba(3, 8, 20, 0.6) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -125,13 +156,30 @@ h3 {
   /* Display voice: heavy weight, negative tracking. This is what
      replaces a downloaded display face. */
   font-weight: 800;
-  letter-spacing: -0.022em;
-  line-height: 1.12;
+  letter-spacing: -0.024em;
+  line-height: 1.14;
+  /* Headings break on sense rather than on whatever fits, which is most of
+     what separates a typeset page from a rendered one. */
+  text-wrap: balance;
+}
+
+/* One rule for every small uppercase label in the app — field labels, meta
+   keys, eyebrows — so they share a single voice instead of each stylesheet
+   inventing its own. */
+.eyebrow,
+.form-field label,
+.book-detail-meta-item dt,
+.account-detail dt,
+.config-error-subtitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
 }
 
 ::selection {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-on-accent);
 }
 
 /* One focus treatment for everything interactive. Never removed —
@@ -175,14 +223,15 @@ h3 {
 }
 
 .btn-primary {
-  background: var(--color-accent);
-  color: #fff;
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(180deg, var(--color-accent-hover), var(--color-accent));
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  box-shadow: var(--glow-accent);
+  background: linear-gradient(180deg, #ffb57e, var(--color-accent-hover));
+  box-shadow: var(--glow-accent), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -209,7 +258,7 @@ h3 {
 /* ---------------------------- headings --------------------------- */
 
 .page-title {
-  font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.25rem);
+  font-size: clamp(1.65rem, 1.15rem + 1.6vw, 2.3rem);
   margin: 0 0 1.75rem;
 }
 
@@ -235,26 +284,29 @@ h3 {
 }
 
 .page-head {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .page-head .page-title {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .page-head-sub {
   margin: 0;
+  max-width: 62ch;
   color: var(--color-text-muted);
-  font-size: 0.98rem;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 /* ---------------------------- surfaces --------------------------- */
 
 .card {
-  background: var(--color-surface);
+  background: linear-gradient(180deg, var(--color-surface-card), var(--color-surface));
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
 /* ---------------------------- forms ------------------------------ */
@@ -276,7 +328,7 @@ h3 {
 
 .form-field input,
 .input {
-  background: var(--color-surface-raised);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   color: var(--color-text);
@@ -299,7 +351,7 @@ h3 {
 .input:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 1px;
-  background: var(--color-surface-hover);
+  background: var(--color-surface-raised);
 }
 
 .form-hint {
@@ -314,7 +366,7 @@ h3 {
 }
 
 .status-select {
-  background: var(--color-surface-raised);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   color: var(--color-text);
@@ -352,11 +404,11 @@ h3 {
 .auth-form {
   max-width: 420px;
   margin: clamp(1.5rem, 5vh, 4rem) auto;
-  background: linear-gradient(180deg, rgba(28, 28, 34, 0.9), rgba(20, 20, 24, 0.9));
+  background: linear-gradient(180deg, var(--color-surface-card), rgba(12, 28, 63, 0.97));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  box-shadow: var(--shadow-lg);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .auth-form .page-title {
@@ -364,9 +416,10 @@ h3 {
 }
 
 .auth-form-intro {
-  margin: 0 0 1.75rem;
+  margin: 0 0 2rem;
   color: var(--color-text-muted);
   font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .auth-link {

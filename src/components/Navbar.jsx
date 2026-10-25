@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { GENRES } from '../lib/genres'
 import { useAuth } from '../context/AuthContext'
+import AccountMenu from './AccountMenu'
 import './Navbar.css'
 
 // The wordmark: an open book whose gutter is a red bookmark. Inline SVG so
@@ -23,7 +24,7 @@ function BookmarkMark() {
 // to create a library, not a forced login. Log In / Sign Up only appear for
 // signed-out visitors; nobody is ever redirected to them on arrival.
 export default function Navbar() {
-  const { isSignedIn, initializing, displayName, signOut } = useAuth()
+  const { isSignedIn, initializing } = useAuth()
 
   // Purely cosmetic: the bar is transparent over a hero and turns solid
   // once the page scrolls. It reads nothing and changes no behaviour.
@@ -34,12 +35,6 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  async function handleSignOut() {
-    await signOut()
-    // Deliberately no redirect: public pages stay readable when signed out,
-    // and /library swaps to its welcome view on its own.
-  }
 
   return (
     <header className={scrolled ? 'navbar navbar-solid' : 'navbar'}>
@@ -76,17 +71,8 @@ export default function Navbar() {
             already signed in. */}
         {!initializing &&
           (isSignedIn ? (
-            <>
-              <span className="navbar-user" title="Signed in">
-                <span className="navbar-avatar" aria-hidden="true">
-                  {(displayName ?? 'R').trim().charAt(0).toUpperCase()}
-                </span>
-                <span className="navbar-user-name">{displayName ?? 'Reader'}</span>
-              </span>
-              <button type="button" className="btn btn-secondary" onClick={handleSignOut}>
-                Log Out
-              </button>
-            </>
+            // Signed in: the account dropdown, which carries Log Out.
+            <AccountMenu />
           ) : (
             <>
               <NavLink to="/login" className="btn btn-secondary">

@@ -3,8 +3,8 @@
   isolation: isolate;
   /* Bleeds to the window edges, cancelling .app-main's padding, so the
      backdrop runs behind the navbar like the home hero. */
-  margin: calc(-2rem - var(--nav-height)) calc(-1 * var(--page-gutter)) 2.5rem;
-  padding: calc(var(--nav-height) + 2.5rem) var(--page-gutter) clamp(2rem, 5vh, 3.5rem);
+  margin: calc(-2rem - var(--nav-height)) calc(-1 * var(--page-gutter)) 3rem;
+  padding: calc(var(--nav-height) + 2.75rem) var(--page-gutter) clamp(2.5rem, 6vh, 4rem);
   overflow: hidden;
 }
 
@@ -14,9 +14,21 @@
   z-index: -2;
   background-size: cover;
   background-position: center 20%;
-  filter: blur(55px) saturate(125%);
+  filter: blur(52px) saturate(122%);
   transform: scale(1.12);
-  opacity: 0.4;
+  opacity: 0.38;
+}
+
+/* The same warm key light the home hero uses, so a book page reads as the
+   same room rather than a different screen. */
+.book-detail::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(520px 460px at 16% 40%, rgba(255, 140, 66, 0.16), transparent 66%),
+    radial-gradient(900px 560px at 92% 10%, rgba(23, 55, 110, 0.4), transparent 62%);
 }
 
 .book-detail::after {
@@ -46,7 +58,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 32px 66px rgba(2, 7, 18, 0.7), 0 0 0 1px rgba(255, 140, 66, 0.2),
+    0 12px 40px rgba(255, 140, 66, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .book-detail-cover img {
@@ -61,7 +74,7 @@
   text-align: center;
   font-size: 0.95rem;
   font-weight: 650;
-  color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 .book-detail-info {
@@ -70,9 +83,10 @@
 }
 
 .book-detail-title {
-  margin: 0 0 0.3rem;
-  font-size: clamp(1.7rem, 1.1rem + 2.2vw, 2.9rem);
-  letter-spacing: -0.03em;
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.9rem);
+  letter-spacing: -0.032em;
+  line-height: 1.1;
   text-wrap: balance;
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
 }
@@ -85,7 +99,7 @@
 }
 
 .book-detail-authors {
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
   font-weight: 650;
   color: var(--color-text);
 }
@@ -100,28 +114,25 @@
 }
 
 .book-detail-description {
-  margin: 0 0 1.5rem;
-  line-height: 1.7;
-  max-width: 68ch;
-  color: #d4d4dc;
+  margin: 0 0 1.75rem;
+  line-height: 1.75;
+  max-width: 66ch;
+  font-size: 1.01rem;
+  color: #c7d3ee;
 }
 
 .book-detail-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 2rem;
+  gap: 1.25rem 2.5rem;
   margin: 0;
-  padding-top: 1.25rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 
 .book-detail-meta-item dt {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--color-text-faint);
-  margin: 0 0 0.3rem;
+  margin: 0 0 0.35rem;
 }
 
 .book-detail-meta-item dd {
