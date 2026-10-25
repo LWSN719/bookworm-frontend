@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { searchBooks } from '../lib/booksApi'
 import { useBookList } from '../hooks/useBookList'
 import BookListSection from '../components/BookListSection'
+import './Search.css'
 
 // Title-only search per the README. The submitted query lives in the URL
 // (?q=...) via React Router's useSearchParams, not just local state, so a
@@ -29,41 +30,49 @@ export default function Search() {
   }
 
   return (
-    <div>
-      <h1 className="page-title">Search books</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '0.75rem', maxWidth: 480 }}>
-        <input
-          type="text"
-          placeholder="Search by title…"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          style={{
-            flex: 1,
-            background: 'var(--color-surface-raised)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius)',
-            color: 'var(--color-text)',
-            padding: '0.6rem 0.75rem',
-            fontSize: '1rem',
-          }}
-        />
-        <button type="submit" className="btn btn-primary">
-          Search
-        </button>
-      </form>
+    <div className={hasSubmitted ? 'search-page' : 'search-page search-page-empty'}>
+      <div className="search-panel">
+        <h1 className="page-title search-heading">Search books</h1>
+        <p className="search-lede">Find a book by its title. Author and keyword searches aren't part of BookWorm.</p>
+
+        <form onSubmit={handleSubmit} className="search-form" role="search">
+          <span className="search-input-wrap">
+            <svg className="search-input-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+              <path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              className="input search-input"
+              placeholder="Search by title…"
+              aria-label="Search by title"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </span>
+          <button type="submit" className="btn btn-primary btn-lg">
+            Search
+          </button>
+        </form>
+      </div>
 
       {!hasSubmitted && (
-        <p className="placeholder-note">Search for a book by title to get started.</p>
+        <p className="placeholder-note search-hint">Search for a book by title to get started.</p>
       )}
 
       {hasSubmitted && (
-        <BookListSection
-          layout="grid"
-          emptyMessage={`No books found for "${submittedQuery}". Try a different title.`}
-          {...list}
-          onLoadMore={list.loadMore}
-          onRetry={list.retry}
-        />
+        <>
+          <p className="search-results-for">
+            Results for <strong>{submittedQuery}</strong>
+          </p>
+          <BookListSection
+            layout="grid"
+            emptyMessage={`No books found for "${submittedQuery}". Try a different title.`}
+            {...list}
+            onLoadMore={list.loadMore}
+            onRetry={list.retry}
+          />
+        </>
       )}
     </div>
   )

@@ -1,14 +1,37 @@
+.book-logs {
+  max-width: 900px;
+}
+
 .book-logs-title {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: clamp(1.15rem, 1rem + 0.5vw, 1.45rem);
+  margin: 0 0 1.25rem;
+}
+
+.book-logs-title::before {
+  content: '';
+  width: 4px;
+  height: 1.15em;
+  border-radius: 2px;
+  background: var(--color-accent);
+  flex-shrink: 0;
 }
 
 .book-logs-compose {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 .book-logs-note {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   color: var(--color-text-muted);
   font-size: 0.9rem;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
+  padding: 0.8rem 1rem;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-sm);
 }

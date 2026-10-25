@@ -1,37 +1,54 @@
 .log-form {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
-  padding: 1.25rem;
+  padding: 1.4rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .log-form-body {
-  background: var(--color-surface-raised);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   color: var(--color-text);
   font-family: inherit;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  padding: 0.6rem 0.75rem;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  padding: 0.8rem 0.9rem;
   resize: vertical;
+  min-height: 7rem;
+  transition: border-color var(--speed) var(--ease), background var(--speed) var(--ease);
+}
+
+.log-form-body::placeholder {
+  color: var(--color-text-faint);
+}
+
+.log-form-body:hover {
+  border-color: var(--color-border-strong);
 }
 
 .log-form-body:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 1px;
+  background: var(--color-surface-raised);
 }
 
 .log-form-count-over {
-  color: var(--color-accent);
+  color: var(--color-accent-hover);
+  font-weight: 650;
 }
 
 .log-form-rating {
   align-items: flex-start;
 }
 
+.log-form-rating .status-select {
+  min-width: 11rem;
+}
+
 .log-form-actions {
   display: flex;
   gap: 0.75rem;
-  margin-top: 0.25rem;
+  margin-top: 0.4rem;
 }

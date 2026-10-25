@@ -77,7 +77,7 @@ export default function Signup() {
           then log in.
         </p>
         <p className="placeholder-note">
-          <Link to="/login" state={{ from: returnTo }} style={{ color: 'var(--color-accent)' }}>
+          <Link to="/login" state={{ from: returnTo }} className="auth-link">
             Go to log in
           </Link>
         </p>
@@ -87,7 +87,10 @@ export default function Signup() {
 
   return (
     <div className="auth-form">
-      <h1 className="page-title">Sign up</h1>
+      <h1 className="page-title">Create your account</h1>
+      <p className="auth-form-intro">
+        Your display name is what other readers see on your logs — never your email.
+      </p>
 
       <form onSubmit={handleSubmit}>
         <div className="form-field">
@@ -136,8 +139,7 @@ export default function Signup() {
 
         <button
           type="submit"
-          className="btn btn-primary"
-          style={{ width: '100%' }}
+          className="btn btn-primary btn-block"
           disabled={submitting}
           aria-busy={submitting}
         >
@@ -147,7 +149,7 @@ export default function Signup() {
 
       <p className="placeholder-note">
         Already have an account?{' '}
-        <Link to="/login" state={{ from: returnTo }} style={{ color: 'var(--color-accent)' }}>
+        <Link to="/login" state={{ from: returnTo }} className="auth-link">
           Log in
         </Link>
         .

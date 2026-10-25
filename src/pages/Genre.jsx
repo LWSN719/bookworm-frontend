@@ -23,9 +23,13 @@ export default function Genre() {
 
   return (
     <div>
-      <h1 className="page-title">{genreLabel(slug)}</h1>
+      <header className="page-head">
+        <h1 className="page-title">{genreLabel(slug)}</h1>
+        <p className="page-head-sub">Browse {genreLabel(slug).toLowerCase()} books. No account needed.</p>
+      </header>
       <BookListSection
         layout="grid"
+        autoLoad
         emptyMessage={`No ${genreLabel(slug)} books found right now.`}
         {...list}
         onLoadMore={list.loadMore}

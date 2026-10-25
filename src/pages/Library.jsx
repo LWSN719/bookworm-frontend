@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useLibrary } from '../hooks/useLibrary'
 import LibraryBookCard from '../components/LibraryBookCard'
 import { EmptyState, ErrorState } from '../components/ListStates'
+import './Library.css'
 
 // /library is a PUBLIC route on purpose. Signed-out visitors get an
 // invitation, not a redirect — they only reach the login page if they choose
@@ -27,23 +28,30 @@ export default function Library() {
 
   if (!isSignedIn) {
     return (
-      <div>
-        <h1 className="page-title">My Library</h1>
-        <section className="card" style={{ maxWidth: 560 }}>
-          <h2 style={{ margin: '0 0 0.5rem', fontSize: '1.25rem' }}>Build your personal library</h2>
-          <p style={{ color: 'var(--color-text-muted)', margin: '0 0 1.25rem' }}>
+      <div className="library-welcome">
+        <section className="library-welcome-card">
+          <span className="library-welcome-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M4 5.2c2.6-.9 5.2-.9 7.7.3v14c-2.5-1.2-5.1-1.3-7.7-.4V5.2Zm16 0v13.9c-2.6-.9-5.2-.8-7.7.4v-14c2.5-1.2 5.1-1.2 7.7-.3Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          <h1 className="page-title library-welcome-title">Build your personal library</h1>
+          <p className="library-welcome-text">
             Save the books you want to read, track what you're reading now, and write logs about
             what you thought — all kept private to you.
           </p>
           {/* The only path to the login page, and only on an explicit click.
               `from` brings them straight back here once they're in. */}
-          <Link to="/login" state={{ from: '/library' }} className="btn btn-primary">
+          <Link to="/login" state={{ from: '/library' }} className="btn btn-primary btn-lg">
             Start your library
           </Link>
+          <p className="placeholder-note library-welcome-note">
+            Browsing, search and reader logs are always open — no account needed for any of it.
+          </p>
         </section>
-        <p className="placeholder-note">
-          Browsing, search and reader logs are always open — no account needed for any of it.
-        </p>
       </div>
     )
   }
@@ -66,7 +74,10 @@ function SignedInLibrary({ userId, displayName }) {
 
   return (
     <div>
-      <h1 className="page-title">My Library</h1>
+      <header className="page-head">
+        <h1 className="page-title">My Library</h1>
+        <p className="page-head-sub">Private to you. Only you can see or change what's saved here.</p>
+      </header>
 
       {library.phase === 'loading' && (
         <p className="placeholder-note" role="status" aria-live="polite">
@@ -82,7 +93,7 @@ function SignedInLibrary({ userId, displayName }) {
 
       {library.phase === 'loaded' && (
         <>
-          <p className="placeholder-note" style={{ marginTop: 0, marginBottom: '1.5rem' }}>
+          <p className="library-count">
             {library.entries.length} {library.entries.length === 1 ? 'book' : 'books'} saved by{' '}
             <strong>{displayName ?? 'you'}</strong>.
           </p>

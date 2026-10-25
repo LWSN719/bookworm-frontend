@@ -42,7 +42,8 @@ export default function Login() {
 
   return (
     <div className="auth-form">
-      <h1 className="page-title">Log in</h1>
+      <h1 className="page-title">Welcome back</h1>
+      <p className="auth-form-intro">Log in to reach your library and your reading logs.</p>
 
       <form onSubmit={handleSubmit}>
         <div className="form-field">
@@ -76,8 +77,7 @@ export default function Login() {
 
         <button
           type="submit"
-          className="btn btn-primary"
-          style={{ width: '100%' }}
+          className="btn btn-primary btn-block"
           disabled={submitting}
           aria-busy={submitting}
         >
@@ -88,7 +88,7 @@ export default function Login() {
       <p className="placeholder-note">
         Need an account?{' '}
         {/* Carry returnTo across, so signing up instead still brings them back. */}
-        <Link to="/signup" state={{ from: returnTo }} style={{ color: 'var(--color-accent)' }}>
+        <Link to="/signup" state={{ from: returnTo }} className="auth-link">
           Sign up
         </Link>
         .

@@ -1,0 +1,74 @@
+.library-welcome {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(1rem, 7vh, 4.5rem);
+}
+
+.library-welcome-card {
+  position: relative;
+  max-width: 580px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(28, 28, 34, 0.92), rgba(20, 20, 24, 0.92));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(2rem, 5vw, 3rem);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* A red glow bleeding in from the top, matching the home hero's lighting. */
+.library-welcome-card::before {
+  content: '';
+  position: absolute;
+  inset: -40% 20% auto 20%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(229, 9, 20, 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+.library-welcome-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  background: var(--color-accent-dim);
+  border: 1px solid var(--color-accent-line);
+  color: var(--color-accent);
+}
+
+.library-welcome-mark svg {
+  width: 28px;
+  height: 28px;
+}
+
+.library-welcome-title {
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2rem);
+  margin-bottom: 0.75rem;
+}
+
+.library-welcome-text {
+  margin: 0 auto 1.75rem;
+  max-width: 46ch;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.library-welcome-note {
+  margin-top: 1.75rem;
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-faint);
+}
+
+.library-count {
+  margin: 0 0 1.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.library-count strong {
+  color: var(--color-text);
+  font-weight: 650;
+}

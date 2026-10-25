@@ -1,0 +1,36 @@
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: clamp(2rem, 10vh, 6rem);
+}
+
+.notfound-code {
+  font-size: clamp(4rem, 3rem + 8vw, 9rem);
+  font-weight: 850;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  /* Outlined rather than filled, so it reads as decoration behind the real
+     message instead of competing with it. */
+  color: transparent;
+  -webkit-text-stroke: 2px var(--color-accent-line);
+  margin-bottom: 0.5rem;
+}
+
+.notfound-title {
+  margin-bottom: 0.75rem;
+}
+
+.notfound-text {
+  margin: 0 0 2rem;
+  max-width: 44ch;
+  color: var(--color-text-muted);
+}
+
+.notfound-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+}

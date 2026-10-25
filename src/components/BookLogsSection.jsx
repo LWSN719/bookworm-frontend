@@ -88,7 +88,7 @@ export default function BookLogsSection({ volumeId, library }) {
 
   return (
     <section className="book-logs">
-      <h2 className="page-title book-logs-title">Reader logs</h2>
+      <h2 className="book-logs-title">Reader logs</h2>
 
       {canWrite && !myLog && (
         <div className="book-logs-compose">

@@ -13,8 +13,12 @@ function RatingStars({ rating }) {
   if (!rating) return null
   return (
     <span className="log-card-rating" aria-label={`Rated ${rating} out of 5`}>
-      {'★'.repeat(rating)}
-      {'☆'.repeat(5 - rating)}
+      <span className="log-card-stars-filled" aria-hidden="true">
+        {'★'.repeat(rating)}
+      </span>
+      <span className="log-card-stars-empty" aria-hidden="true">
+        {'★'.repeat(5 - rating)}
+      </span>
     </span>
   )
 }
@@ -34,13 +38,19 @@ export default function LogCard({ log, isOwn = false, pending = false, onEdit, o
   return (
     <article className={isOwn ? 'log-card log-card-own' : 'log-card'}>
       <div className="log-card-header">
-        <span className="log-card-author">
-          {displayName}
-          {isOwn && <span className="log-card-you">your log</span>}
+        <span className="log-card-avatar" aria-hidden="true">
+          {displayName.trim().charAt(0).toUpperCase()}
         </span>
-        <span className="log-card-date">{formatLogDate(log.created_at)}</span>
+        <span className="log-card-byline">
+          <span className="log-card-author">
+            {displayName}
+            {isOwn && <span className="log-card-you">your log</span>}
+          </span>
+          <span className="log-card-date">{formatLogDate(log.created_at)}</span>
+        </span>
+        <RatingStars rating={log.rating} />
       </div>
-      <RatingStars rating={log.rating} />
+
       <p className="log-card-body">{log.body}</p>
 
       {isOwn && (

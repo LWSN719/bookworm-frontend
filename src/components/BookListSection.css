@@ -1,30 +1,230 @@
 .book-list-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .book-list-title {
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-}
-
-.book-carousel {
   display: flex;
-  gap: 0.9rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.1rem, 0.95rem + 0.5vw, 1.35rem);
+  font-weight: 750;
+  letter-spacing: -0.015em;
 }
 
+.book-list-title::before {
+  content: '';
+  width: 4px;
+  height: 1.15em;
+  border-radius: 2px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* ---- carousel ---- */
+
+.carousel {
+  position: relative;
+}
+
+/* Netflix-style sizing: the row shows a whole number of covers across the
+   available width, so cards grow with the viewport instead of sitting at a
+   fixed small size with dead space beside them.
+   Each card = (row width - the gaps between them) / cards per view. */
+.book-carousel {
+  --row-gap: 1.25rem;
+  --per-view: 6;
+  display: flex;
+  gap: var(--row-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  /* Room for the hover lift and glow, which the scroll container would
+     otherwise clip. */
+  padding: 0.5rem 0 1.5rem;
+}
+
+.book-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.book-carousel > * {
+  scroll-snap-align: start;
+}
+
+.book-carousel .book-card {
+  width: calc((100% - (var(--per-view) - 1) * var(--row-gap)) / var(--per-view));
+}
+
+@media (min-width: 1600px) {
+  .book-carousel {
+    --per-view: 7;
+  }
+}
+
+@media (max-width: 1279px) {
+  .book-carousel {
+    --per-view: 5;
+  }
+}
+
+@media (max-width: 1023px) {
+  .book-carousel {
+    --per-view: 4;
+  }
+}
+
+@media (max-width: 767px) {
+  .book-carousel {
+    --row-gap: 0.9rem;
+    --per-view: 3;
+  }
+}
+
+/* A fractional count on phones leaves the next cover half-visible at the
+   edge, which is what tells you the row scrolls. */
+@media (max-width: 559px) {
+  .book-carousel {
+    --per-view: 2.25;
+    scroll-snap-type: x proximity;
+  }
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  transform: translateY(-50%);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 78px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  background: rgba(10, 10, 12, 0.78);
+  backdrop-filter: blur(8px);
+  color: var(--color-text);
+  opacity: 0;
+  transition: opacity var(--speed) var(--ease), background var(--speed) var(--ease),
+    border-color var(--speed) var(--ease);
+}
+
+.carousel-arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+.carousel:hover .carousel-arrow,
+.carousel-arrow:focus-visible {
+  opacity: 1;
+}
+
+.carousel-arrow:hover:not(:disabled) {
+  background: rgba(229, 9, 20, 0.85);
+  border-color: var(--color-accent);
+}
+
+/* Hidden rather than dimmed at the ends: a dead control is worse than no
+   control, and this also hides both when the row doesn't overflow. */
+.carousel-arrow:disabled {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.carousel-arrow-prev {
+  left: -0.6rem;
+}
+
+.carousel-arrow-next {
+  right: -0.6rem;
+}
+
+/* Touch devices scroll by swipe; the arrows only add clutter. */
+@media (hover: none) {
+  .carousel-arrow {
+    display: none;
+  }
+}
+
+/* ---- grid ---- */
+
+/* Sized to land near the carousel's cards so a genre page and the home row
+   read as the same component at the same scale. */
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1.1rem 0.9rem;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(146px, 13vw, 200px), 1fr));
+  gap: 2rem 1.25rem;
 }
+
+/* In a grid the card fills its track instead of keeping a fixed width. */
+.book-grid .book-card {
+  width: 100%;
+}
+
+/* ---- auto-load sentinel ---- */
+
+.autoload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  /* Has to occupy real space, or the observer can never see it intersect. */
+  min-height: 72px;
+  padding: 1rem 0;
+}
+
+/* In a row the sentinel is a track item, so it needs width instead of
+   height and must not be squashed by the flex container. */
+.autoload-horizontal {
+  flex: 0 0 auto;
+  width: 180px;
+  min-height: 0;
+  align-self: stretch;
+  padding: 0;
+}
+
+.autoload-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.autoload-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-strong);
+  border-top-color: var(--color-accent);
+  animation: autoload-spin 0.7s linear infinite;
+}
+
+@keyframes autoload-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* The spinner is decoration; the status text carries the meaning, so with
+   reduced motion it simply stops rather than disappearing. */
+@media (prefers-reduced-motion: reduce) {
+  .autoload-spinner {
+    animation: none;
+    border-top-color: var(--color-border-strong);
+  }
+}
+
+/* ---- load more (search) ---- */
 
 .load-more-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
 }
 
 .load-more-error-text {

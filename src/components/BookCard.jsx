@@ -18,6 +18,11 @@ export default function BookCard({ book }) {
         ) : (
           <span className="book-card-cover-fallback">{book.title}</span>
         )}
+        {/* Decorative hover layer. aria-hidden so the "View" affordance
+            never reaches assistive tech as if it were a second link. */}
+        <span className="book-card-overlay" aria-hidden="true">
+          <span className="book-card-overlay-cta">View</span>
+        </span>
       </div>
       <p className="book-card-title" title={book.title}>
         {book.title}

@@ -1,0 +1,241 @@
+/* Bleeds to the window edges by cancelling .app-main's padding, so the
+   layout component itself needed no change. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  margin: calc(-2rem - var(--nav-height)) calc(-1 * var(--page-gutter)) 3rem;
+  padding: calc(var(--nav-height) + clamp(3rem, 8vh, 6rem)) var(--page-gutter) clamp(2.5rem, 6vh, 4.5rem);
+  min-height: min(68vh, 560px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: -8%;
+  z-index: -2;
+  background-size: cover;
+  background-position: center 22%;
+  filter: blur(42px) saturate(130%);
+  transform: scale(1.1);
+  opacity: 0.5;
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--scrim-left), var(--scrim-bottom);
+}
+
+.hero-inner {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 62ch;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: var(--color-accent-dim);
+  border: 1px solid var(--color-accent-line);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff8a92;
+}
+
+.hero-title {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.85rem, 1.1rem + 2.9vw, 3.4rem);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
+  /* Google Books titles can run to a full sentence. Unclamped, one of those
+     grew the hero past the viewport and pushed the row below off-screen. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-subtitle {
+  margin: 0 0 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+
+.hero-author {
+  font-weight: 650;
+  color: var(--color-text);
+}
+
+.hero-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-text-faint);
+}
+
+.hero-description {
+  margin: 0 0 1.75rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #d4d4dc;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.hero-btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.hero-poster {
+  flex-shrink: 0;
+  width: clamp(170px, 16vw, 240px);
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-surface-raised);
+  display: grid;
+  place-items: center;
+  transition: transform var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+}
+
+.hero-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-poster-fallback {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 650;
+  color: var(--color-text-muted);
+}
+
+.hero-poster:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg), var(--glow-accent);
+}
+
+/* ---- skeleton ---- */
+
+.hero-skeleton .hero-inner {
+  opacity: 0.5;
+}
+
+.hero-skeleton-line {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+      100deg,
+      var(--color-surface-raised) 30%,
+      var(--color-surface-hover) 50%,
+      var(--color-surface-raised) 70%
+    )
+    0 0 / 300% 100%;
+  animation: skeleton-sweep 1.5s ease-in-out infinite;
+}
+
+.hero-skeleton-eyebrow {
+  width: 180px;
+  height: 26px;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.hero-skeleton-title {
+  width: min(560px, 80%);
+  height: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 1rem;
+}
+
+.hero-skeleton-text {
+  width: min(460px, 70%);
+  height: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.hero-skeleton-text-short {
+  width: min(300px, 50%);
+}
+
+.hero-poster-empty {
+  border-style: dashed;
+}
+
+/* Stacked below this: the poster sits above the copy so the page still
+   opens on an image. */
+@media (max-width: 860px) {
+  /* The navbar switches to height:auto here (the genre strip wraps onto its
+     own line), so --nav-height no longer describes it. Stop tucking the hero
+     underneath and simply start below the bar. */
+  .hero {
+    min-height: 0;
+    margin-top: -2rem;
+    padding-top: 2.5rem;
+  }
+  .hero-inner {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .hero-poster {
+    width: clamp(130px, 34vw, 180px);
+  }
+  .hero-title {
+    -webkit-line-clamp: 3;
+  }
+  .hero-scrim {
+    background: var(--scrim-bottom);
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-actions .btn {
+    flex: 1 1 100%;
+  }
+}
